@@ -22,7 +22,13 @@ public class LineOfBestFit {
         double[][] b = {{-4,6,3},{7,2,4}};
         double[][] ab = Matrix.multiply(a, b);
         
-        Matrix.print(ab);
+        Matrix.print(a);
+        System.out.println();
+        Matrix.print(b);
+        System.out.println();
+        Matrix.print(Matrix.multiply(a, b));
+        
+      
         
     }
     
