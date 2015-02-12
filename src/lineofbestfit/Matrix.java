@@ -12,13 +12,9 @@ package lineofbestfit;
 //Static matrix functions that can be performed on double arrays (of double type)
 public class Matrix {
 
-    private int M;
-    private int N;
-    private double[][] matrix;
-
-//    public Matrix() {
-//
-//    }
+    private int M; //rows
+    private int N; //columns
+    private double[][] matrix;  //the array of values for the Matrix
 
     /**
      *
@@ -45,19 +41,19 @@ public class Matrix {
 
     /**
      *
-     * Multiply two matricies and return the output.
+     * Multiply two matricies and return the output. Multiplies object matrix A
+     * by param matrix B AB
      *
-     * @param A Matrix A
      * @param B Matrix B
      * @return AxB
      */
-    public static Matrix multiply(Matrix A, Matrix B) {
+    public Matrix multiply(Matrix B) {
 
-        double[][] a = A.matrix; //array for matrix A;
+        double[][] a = this.matrix; //array for matrix A;
         double[][] b = B.matrix;
-        int m = A.M; //rows of output matrix from rows of matrix A
+        int m = this.M; //rows of output matrix from rows of matrix A
         int n = B.N; //colunms of output matrix from columns of matrix B
-        int innerDimension = A.N;
+        int innerDimension = this.N;
         double[][] ab = new double[m][n]; //output array
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
@@ -119,6 +115,21 @@ public class Matrix {
      */
     public static void print(Matrix A) {
         double[][] a = A.matrix;
+        int m = a.length;
+        int n = a[0].length;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.print(a[i][j] + "  ");
+            }
+            System.out.println();
+        }
+    }
+
+    /**
+     * Print the Matrix.
+     */
+    public void print() {
+        double[][] a = this.matrix;
         int m = a.length;
         int n = a[0].length;
         for (int i = 0; i < m; i++) {

@@ -17,24 +17,15 @@ public class LineOfBestFit {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        
-//        double[][] a = {{1,2},{3,4}};
-//        double[][] b = {{-4,6,3},{7,2,4}};
-//        double[][] ab = Matrix.multiply(a, b);
-//        
-//        Matrix.print(a);
-//        System.out.println();
-//        Matrix.print(b);
-//        System.out.println();
-//        Matrix.print(Matrix.multiply(a, b));
-        int[][] a = {{1,0,2},{3,2,2},{3,0,4}};
+
+        int[][] a = {{4,2},{8,7}};
+        int[][] b = {{1,8,7},{6,2,-1}};
         Matrix A = new Matrix(a);
-        Matrix.print(A);
+        Matrix B = new Matrix(b);
+        
+        Matrix.print((A.multiply(B)));
         System.out.println();
-        
-        A = A.transpose();
-        
-        Matrix.print(A);
+        (A.multiply(B)).print();
         
         
       
