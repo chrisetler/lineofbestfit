@@ -51,10 +51,10 @@ public class Matrix {
     public static double[][] transpose(double[][] a) {
         int m = a.length;
         int n = a[0].length;
-        double[][] b = new double[m][n];
+        double[][] b = new double[n][m];
 
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
                 b[i][j] = a[j][i];
             }
         }
@@ -122,10 +122,10 @@ public class Matrix {
     public static int[][] transpose(int[][] a) {
         int m = a.length;
         int n = a[0].length;
-        int[][] b = new int[m][n];
+        int[][] b = new int[n][m];
 
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
                 b[i][j] = a[j][i];
             }
         }
