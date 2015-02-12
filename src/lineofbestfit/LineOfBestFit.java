@@ -27,10 +27,15 @@ public class LineOfBestFit {
 //        Matrix.print(b);
 //        System.out.println();
 //        Matrix.print(Matrix.multiply(a, b));
-        int[][] a = {{2},{1},{3}};
-        int[][] b = {{0,1,-2}};
+        int[][] a = {{1,0,2},{3,2,2},{3,0,4}};
+        Matrix A = new Matrix(a);
+        Matrix.print(A);
+        System.out.println();
         
-        Matrix.print(Matrix.transpose(a));
+        A = A.transpose();
+        
+        Matrix.print(A);
+        
         
       
         
