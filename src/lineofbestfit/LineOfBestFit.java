@@ -6,6 +6,7 @@
 package lineofbestfit;
 
 import lineofbestfit.Matrix;
+
 /**
  *
  * @author Chris
@@ -19,14 +20,21 @@ public class LineOfBestFit {
         // TODO code application logic here
 
         int[][] a = {{4,2},{8,7}};
-        int[][] b = {{1,8,7},{6,2,-1}};
+        int[][] b = {{1,8},{6,2}};
         Matrix A = new Matrix(a);
         Matrix B = new Matrix(b);
         
-        Matrix.print((A.multiply(B)));
-        System.out.println();
-        (A.multiply(B)).print();
         
+        System.out.println("A\n"+A);
+       
+        System.out.println("B\n"+B);
+       
+        System.out.println("A+B\n"+A.add(B));
+      
+        System.out.println("A-B\n"+A.subtract(B));
+        
+        System.out.println("Row 1 of A: \n" + A.printRow(1));
+       
         
       
         
