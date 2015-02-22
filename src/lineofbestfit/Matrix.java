@@ -201,43 +201,29 @@ public class Matrix {
         Row tempRow1 = new Row();
         Row tempRow2 = new Row();
         double val1, val2,val3;
-        double zero = 0;
         //get each row
         for(int i=0; i<M; i++) {
             row[i] = new Row(i);
         }
-        
-        //check to make sure the last row doesn't have any zero's in it
-        //if it does, we will have to switch it with another row and multiply determinant by -1
-        lastRowHasZero = row[M-1].hasZero();
-        if(lastRowHasZero) {
-            //if last row has a zero, go through the other rows and switch it with the first that has no zeros
-            for (int i=0; i<M-1; i++) {
-                if(!row[i].hasZero() && lastRowHasZero) {
-                    tempRow1.setRow(row[i]);
-                    row[i].setRow(row[M-1]);
-                    row[M-1].setRow(tempRow1);
-                    lastRowHasZero = false;
-                    det *= -1;
-                    break;
-                }
+
+        //in order for the code to work as we want it to, the last row has to have no zeros in it
+        //technically it can have some zeros in it in many cases but by having no zeros we ensure there will be no divide-by-0 errors
+        //this can be done by checking if the last row has any zeros in it with the has zeros class
+        //if it does, add every row to the last row to create one "super row" that can't have any zeros
+        //if this super row has zeros, then the matrix is singular, and we can return 0
+        if(row[M-1].hasZero()){
+            tempRow1 = row[M-1];
+            System.out.println("Last row: " +tempRow1.rowStr());
+            for(int i=0; i<M-1; i++){
+                tempRow2 = tempRow1.add(row[i]);
+                tempRow1.setRow(tempRow2);
+               // System.out.println(tempRow2.rowStr());
             }
+            
+            row[M-1].setRow(tempRow1);
+            System.out.println("New Last Row: " + row[M-1].rowStr());
+            if(row[M-1].hasZero()) return 0;
         }
-        //if no replacement row was found, then we must create a row with no zero's in it.
-        //this is done by adding multiple rows until we get one without zero's 
-        if(lastRowHasZero) {
-            for(int i=0; i<M-1; i++) {
-                tempRow2.setRow(row[i].add(row[M-1]));
-                if(!tempRow2.hasZero() && lastRowHasZero) {
-                    row[M-1].setRow(tempRow2);
-                    lastRowHasZero = false;
-                    break;
-                }
-            }
-        }
-        
-        //if no replacement row was found, then the determinant must be 0 as the matrix is singular
-        if(lastRowHasZero) return 0;
         
         
         
@@ -260,15 +246,17 @@ public class Matrix {
                 int currRow = j;
                 int nexRow = j+1;
                 
-                while(row[nexRow].row[i] == zero){
+                while(row[nexRow].row[i] == 0){
                     nexRow++;
+                    if(nexRow == M-1) break;
                 }
+                System.out.println("Next Row: " + row[nexRow].rowStr() + " Lst:" + row[M-1].rowStr());
                 val2 = row[nexRow].row[i];
                 val1 = row[currRow].row[i];
                 val3 = val1/val2;
                 
-                tempRow1 = row[nexRow].scalarMult(val3);
-                tempRow2 = row[currRow].subtract(tempRow1);
+                tempRow1 = (row[nexRow].scalarMult(val3));
+                tempRow2 = (row[currRow].subtract(tempRow1));
                 //System.out.println(row[M-1].rowStr() + "*"+val3+"= " + tempRow1.rowStr());
                 row[currRow].setRow(tempRow2);
                 //System.out.println(j+" "+i+" "+row[j].rowStr());
@@ -325,7 +313,7 @@ public class Matrix {
         
         private Row(int rowNum) {
             row = matrix[rowNum];
-            length = M;
+            length = row.length;
         }
 
         private Row(double[] rowIn) {
@@ -407,7 +395,7 @@ public class Matrix {
          */
         private String rowStr() {
             String out = "";
-            for (int i = 0; i < M; i++) {
+            for (int i = 0; i < length; i++) {
                 out += row[i] + ", ";
             }
             return out;

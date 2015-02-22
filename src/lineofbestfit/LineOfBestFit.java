@@ -19,7 +19,7 @@ public class LineOfBestFit {
     public static void main(String[] args) {
         // TODO code application logic here
 
-        int[][] a = {{4,0,0},{8,3,0},{0,7,2}};
+        int[][] a = {{1,2,0,1},{8,7,0,2},{1,0,3,1},{0,1,3,0}};
         int[][] b = {{1,8},{6,2}};
         Matrix A = new Matrix(a);
         Matrix B = new Matrix(b);
@@ -34,7 +34,7 @@ public class LineOfBestFit {
 //        System.out.println("A-B\n"+A.subtract(B));
 //        
 //        System.out.println("Row 1 of A: \n" + A.printRow(1));
-        System.out.println(A);
+        System.out.println(A+"\n");
         System.out.println(A.determinant());
         
       

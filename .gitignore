@@ -47,3 +47,6 @@ Temporary Items
 /dist/
 *.class
 *.class
+build/built-jar.properties
+build/classes/lineofbestfit/LineOfBestFit.class
+build/classes/lineofbestfit/Matrix$Row.class
