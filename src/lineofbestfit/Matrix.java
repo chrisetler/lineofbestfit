@@ -186,7 +186,70 @@ public class Matrix {
         }
     }
 
+
     /**
+     * Find the determinant of the matrix by first reducing it to a triangular matrix and then finally multiplying along the diagnol
+     * @return the determinant as a double.
+     */
+    public double determinant() {
+        //triangular matrix method
+        //CURRENT DOES NOT WORK FOR: anything where the last row has a 0 on it.
+        
+        double det = 1;
+        Row[] row = new Row[M];
+        //temp rows
+        Row tempRow1 = new Row();
+        Row tempRow2 = new Row();
+        double val1, val2,val3;
+        double zero = 0;
+        //get each row
+        for(int i=0; i<M; i++) {
+            row[i] = new Row(i);
+        }
+        
+        //we are going to make the upper diagnol set to 0, one column at a time
+        //start with the right-most column and keep going left until reached the second to first column, which begins the diagnol
+        for (int i=(M-1); i>0; i--) {
+            int numberOfZeros = i; //number of zeros in the column is equal to that column num-1
+            //start with first row (0), go to the numberOfZeros-1 row
+            for(int j=0; j<numberOfZeros; j++) {
+                //i is the column
+                //j is the row
+                //use the last row as the row to add all other rows
+                //get the ratio of the current row and the row to add to it, such that the element we are tyring to get to 0 will be zero when subtraction occurs
+                /*
+                    Consider the two rows R1 [1 3 -4]
+                                          R2 [7 8 3 ]
+                    val1=-4, val2=3, val3 thus = -4/3
+                    Thus R1 becomes [1+4/3(7) 3+4/3(8) -4+4/3(3)] = [31/3 41/3 0]
+                */
+                int currRow = j;
+                int nexRow = j+1;
+                
+                while(row[nexRow].row[i] == zero){
+                    nexRow++;
+                }
+                val2 = row[nexRow].row[i];
+                val1 = row[currRow].row[i];
+                val3 = val1/val2;
+                
+                tempRow1 = row[nexRow].scalarMult(val3);
+                tempRow2 = row[currRow].subtract(tempRow1);
+                //System.out.println(row[M-1].rowStr() + "*"+val3+"= " + tempRow1.rowStr());
+                row[currRow].setRow(tempRow2);
+                System.out.println(j+" "+i+" "+row[j].rowStr());
+                
+            }
+        }
+        //now that the matrix is triangular, we simply multiply across the diagnol and recover the determinant
+        for (int i=0; i<M; i++){
+            System.out.println(row[i].row[i]);
+            det *= row[i].row[i];
+        }
+        return det;
+    }
+    
+        /**
      *
      * @return the Matrix in a (semi)readable format
      */
@@ -203,7 +266,7 @@ public class Matrix {
         }
         return out;
     }
-
+    
     /**
      * For debugging purposes only
      *
@@ -223,7 +286,9 @@ public class Matrix {
 
         double[] row;
         int length;
-
+        
+        private Row() {}
+        
         private Row(int rowNum) {
             row = matrix[rowNum];
             length = M;
@@ -290,7 +355,7 @@ public class Matrix {
         private Row scalarMult(double scalar) {
             double[] rowOut = new double[length];
             for (int i=0; i < length; i++) {
-                rowOut[i] *= scalar;
+                rowOut[i] = row[i]*scalar;
             }
             return new Row(rowOut);
         }
