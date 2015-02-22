@@ -193,8 +193,8 @@ public class Matrix {
      */
     public double determinant() {
         //triangular matrix method
-        //CURRENT DOES NOT WORK FOR: anything where the last row has a 0 on it.
         
+        boolean lastRowHasZero;
         double det = 1;
         Row[] row = new Row[M];
         //temp rows
@@ -206,6 +206,40 @@ public class Matrix {
         for(int i=0; i<M; i++) {
             row[i] = new Row(i);
         }
+        
+        //check to make sure the last row doesn't have any zero's in it
+        //if it does, we will have to switch it with another row and multiply determinant by -1
+        lastRowHasZero = row[M-1].hasZero();
+        if(lastRowHasZero) {
+            //if last row has a zero, go through the other rows and switch it with the first that has no zeros
+            for (int i=0; i<M-1; i++) {
+                if(!row[i].hasZero() && lastRowHasZero) {
+                    tempRow1.setRow(row[i]);
+                    row[i].setRow(row[M-1]);
+                    row[M-1].setRow(tempRow1);
+                    lastRowHasZero = false;
+                    det *= -1;
+                    break;
+                }
+            }
+        }
+        //if no replacement row was found, then we must create a row with no zero's in it.
+        //this is done by adding multiple rows until we get one without zero's 
+        if(lastRowHasZero) {
+            for(int i=0; i<M-1; i++) {
+                tempRow2.setRow(row[i].add(row[M-1]));
+                if(!tempRow2.hasZero() && lastRowHasZero) {
+                    row[M-1].setRow(tempRow2);
+                    lastRowHasZero = false;
+                    break;
+                }
+            }
+        }
+        
+        //if no replacement row was found, then the determinant must be 0 as the matrix is singular
+        if(lastRowHasZero) return 0;
+        
+        
         
         //we are going to make the upper diagnol set to 0, one column at a time
         //start with the right-most column and keep going left until reached the second to first column, which begins the diagnol
@@ -237,7 +271,7 @@ public class Matrix {
                 tempRow2 = row[currRow].subtract(tempRow1);
                 //System.out.println(row[M-1].rowStr() + "*"+val3+"= " + tempRow1.rowStr());
                 row[currRow].setRow(tempRow2);
-                System.out.println(j+" "+i+" "+row[j].rowStr());
+                //System.out.println(j+" "+i+" "+row[j].rowStr());
                 
             }
         }
@@ -359,6 +393,14 @@ public class Matrix {
             }
             return new Row(rowOut);
         }
+        
+        private boolean hasZero() {
+            for(int i=0; i<length; i++){
+                if (row[i] == 0) return true;
+            }
+            return false;
+        }
+        
         /**
          * only for debugging
          * @deprecated @return a String of the Row

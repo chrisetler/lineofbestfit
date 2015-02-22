@@ -19,7 +19,7 @@ public class LineOfBestFit {
     public static void main(String[] args) {
         // TODO code application logic here
 
-        int[][] a = {{4,0,0},{8,7,0},{8,7,9}};
+        int[][] a = {{4,0,0},{8,3,0},{0,7,2}};
         int[][] b = {{1,8},{6,2}};
         Matrix A = new Matrix(a);
         Matrix B = new Matrix(b);

@@ -1,5 +1,5 @@
 #Java compiled stuff
-*.class
+build/classes/lineofbestfit/*.class
 
 # Windows image file caches
 Thumbs.db
@@ -45,3 +45,5 @@ Network Trash Folder
 Temporary Items
 .apdisk
 /dist/
+*.class
+*.class
